@@ -4,7 +4,7 @@ import "../styles.css";
 export default function TicketForm() {
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
-  const [Priority, setPriority] = useState("");
+  const [priority, setPriority] = useState("");
 
   const priorityLabels = {
     1: "Low",
@@ -21,7 +21,6 @@ export default function TicketForm() {
     e.preventDefault();
     setTitle(e.target.title.value);
     setDescription(e.target.title.value);
-    setPriority();
     clearForm();
   };
   return (
@@ -51,20 +50,26 @@ export default function TicketForm() {
           ></textarea>
         </div>
 
-        <div class="form-group">
-          <label>Priority:</label>
-          <br />
-          <input type="checkbox" id="low" name="priority" value="Low" />
-          <label for="low">Low</label>
-          <input type="checkbox" id="medium" name="priority" value="Medium" />
-          <label for="medium">Medium</label>
-          <input type="checkbox" id="high" name="priority" value="High" />
-          <label for="high">High</label>
-        </div>
+        <fieldset className="priority-fieldset">
+          <legend>Priority</legend>
+          {Object.entries(priorityLabels).map(([value, label]) => (
+            <label key={value} className="priority-label">
+              <input
+                type="radio"
+                className="priority-input"
+                value={value}
+                checked={priority === value}
+                onChange={(e) => setPriority(e.target.value)}
+              ></input>
+              {label}
+            </label>
+          ))}
+        </fieldset>
 
-        <button type="submit">Submit</button>
+        <button type="submit" className="button">
+          Submit
+        </button>
       </form>
-      <p> {title}</p>
     </div>
   );
 }
